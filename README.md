@@ -1,4 +1,4 @@
-# Identcoin avatar
+# Identavatar
 
 ![GitHub](https://img.shields.io/github/license/steelWinds/identavatar)
 ![GitHub top language](https://img.shields.io/github/languages/top/steelWinds/identavatar)
