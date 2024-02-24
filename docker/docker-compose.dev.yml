@@ -1,0 +1,12 @@
+version: "3"
+
+name: identavatar-dev
+
+services:
+  app:
+    image: cosmtrek/air
+    working_dir: /home/app
+    ports:
+      - "3180:3180"
+    volumes:
+      - ../:/home/app
