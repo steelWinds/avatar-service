@@ -5,9 +5,7 @@
 
 </br>
 <div align="center">
-  <a href="https://v-vibes.vercel.app/">
-    <img width="300" height="230" src="./git/logo.svg">
-  </a>
+  <img width="300" height="230" src="./git/logo.svg">
   <h3 align="center">IdentAvatar</h3>
 </div>
 
