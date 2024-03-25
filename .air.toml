@@ -1,13 +1,15 @@
 root = "."
 testdata_dir = "testdata"
-tmp_dir = "air_build"
+tmp_dir = "air-build"
 
 [build]
   args_bin = []
-  bin = "./air_build/main"
-  cmd = "go build -o ./air_build/main ./app/main.go"
+  bin = "/air-build/main.exe"
+  cmd = "go build -o /air-build/main.exe ./app/main.go"
+  poll = true
+  poll_interval = 500
   delay = 1000
-  exclude_dir = ["assets", "tmp", "vendor", "testdata"]
+  exclude_dir = ["assets", "air-build", "vendor", "testdata"]
   exclude_file = []
   exclude_regex = ["_test.go"]
   exclude_unchanged = false

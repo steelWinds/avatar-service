@@ -42,7 +42,7 @@ func GetIndentcoin(options Options) (*bytes.Buffer, error) {
 
 	svgo := svgo.New(buffer)
 
-	svgo.Start(svgSize, svgSize)
+	svgo.Start(svgSize, svgSize, "shape-rendering=\"crispEdges\"")
 
 	mirror := options.Squares / 2
 
