@@ -5,7 +5,7 @@
 
 </br>
 <div align="center">
-  <img width="300" height="230" src="./git/logo.svg">
+  <img width="300" height="230" src="./public/logo.svg">
   <h3 align="center">IdentAvatar</h3>
 </div>
 

@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/json"
+	"errors"
 	"log"
 	"net/http"
 	"strconv"
@@ -15,18 +16,18 @@ func main() {
 	err := http.ListenAndServe(":3180", nil)
 
 	if err != nil {
-		log.Fatal("ListenAndServe:", err)
+		log.Fatal("Server shutdown:", err)
 	}
 }
 
-func HandleError(w http.ResponseWriter, errorMessage string) {
+func HandleError(w http.ResponseWriter, externalErr error) {
 	w.Header().Set("Content-type", "application/json")
 
 	w.WriteHeader(http.StatusInternalServerError)
 
 	response := make(map[string]string)
 
-	response["message"] = errorMessage
+	response["message"] = externalErr.Error()
 
 	jsonResponse, err := json.Marshal(response)
 
@@ -44,10 +45,16 @@ func HandleGetIdentcoin(w http.ResponseWriter, req *http.Request) {
 
 	word := req.URL.Query().Get("word")
 
+	if word == "" {
+		HandleError(w, errors.New("word is empty"))
+
+		return
+	}
+
 	squares, err := strconv.Atoi(req.URL.Query().Get("squares"))
 
 	if err != nil {
-		HandleError(w, "Squares is not int")
+		HandleError(w, errors.New("squares is not int"))
 
 		return
 	}
@@ -55,13 +62,7 @@ func HandleGetIdentcoin(w http.ResponseWriter, req *http.Request) {
 	size, err := strconv.Atoi(req.URL.Query().Get("size"))
 
 	if err != nil {
-		HandleError(w, "Size is not int")
-
-		return
-	}
-
-	if word == "" || squares == 0 || size == 0 {
-		HandleError(w, "All params is required")
+		HandleError(w, errors.New("size is not int"))
 
 		return
 	}
@@ -75,7 +76,7 @@ func HandleGetIdentcoin(w http.ResponseWriter, req *http.Request) {
 	buf, err := internal.GetIndentcoin(options)
 
 	if err != nil {
-		HandleError(w, "Generate avatar failed")
+		HandleError(w, errors.New("generate avatar failed"))
 
 		return
 	}

@@ -2,7 +2,8 @@ package internal
 
 import (
 	"bytes"
-	"hash/fnv"
+	"crypto/sha1"
+	"encoding/binary"
 	"math/rand"
 
 	svgo "github.com/ajstarks/svgo"
@@ -15,16 +16,10 @@ type Options struct {
 	Word    string
 }
 
-func getHashcode(str string) (int64, error) {
-	fnvHash := fnv.New32()
+func getHashcode(str string) int64 {
+	hashSlice := sha1.Sum([]byte(str))
 
-	_, err := fnvHash.Write([]byte(str))
-
-	if err != nil {
-		return 0, err
-	}
-
-	return int64(fnvHash.Sum32()), nil
+	return int64(binary.BigEndian.Uint64(hashSlice[:]))
 }
 
 func getColor(hash int64) string {
@@ -46,13 +41,9 @@ func GetIndentcoin(options Options) (*bytes.Buffer, error) {
 
 	mirror := options.Squares / 2
 
-	hash, err := getHashcode(options.Word)
+	hash := getHashcode(options.Word)
 
 	fillRect := "fill: " + getColor(hash)
-
-	if err != nil {
-		return nil, err
-	}
 
 	r := rand.New(rand.NewSource(hash))
 

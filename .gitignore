@@ -21,4 +21,5 @@
 go.work
 
 tmp
-air_build
+air-build
+*.log
