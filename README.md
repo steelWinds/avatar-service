@@ -1,7 +1,10 @@
 # Identavatar
 
 ![GitHub](https://img.shields.io/github/license/steelWinds/identavatar)
-![GitHub top language](https://img.shields.io/github/languages/top/steelWinds/identavatar)
+![GitHub Release](https://img.shields.io/github/v/release/steelWinds/identavatar)
+![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/steelWinds/identavatar)
+[![codecov](https://codecov.io/gh/steelWinds/identavatar/graph/badge.svg?token=ZR9WP4K9X1)](https://codecov.io/gh/steelWinds/identavatar)
+
 
 </br>
 <div align="center">
