@@ -13,7 +13,7 @@ RUN go mod download
 
 COPY . .
 
-RUN go build -ldflags="-s -w" -o /app/main app/main.go
+RUN go build -ldflags="-s -w" -o /app/main cmd/app/main.go
 
 FROM alpine
 
