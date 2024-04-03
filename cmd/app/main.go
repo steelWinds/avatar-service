@@ -4,7 +4,7 @@ import (
 	"log"
 	"net/http"
 
-	app "github.com/steelWinds/identavatar/internal/app"
+	"github.com/steelWinds/identavatar/internal/app"
 )
 
 func main() {
