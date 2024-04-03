@@ -26,11 +26,15 @@
    ```bash
    go mod tidy
    ```
-3. Build docker image and run it
+3. Run tests
+   ```bash
+   make test
+   ```
+4. Build docker image and run it
    ```bash
    make build
    ```
-3. Or run docker-compose with Air
+5. Or run docker-compose with Air
    ```bash
    make up
    ```

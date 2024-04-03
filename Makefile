@@ -3,3 +3,6 @@ build:
 
 up:
 	docker compose -f docker/docker-compose.dev.yml up -d
+
+test:
+	go test -v ./...
