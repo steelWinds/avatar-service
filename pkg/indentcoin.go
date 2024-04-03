@@ -1,4 +1,4 @@
-package internal
+package pkg
 
 import (
 	"bytes"
@@ -6,8 +6,8 @@ import (
 	"encoding/binary"
 	"math/rand"
 
-	svgo "github.com/ajstarks/svgo"
-	colorful "github.com/lucasb-eyer/go-colorful"
+	svg "github.com/ajstarks/svgo"
+	"github.com/lucasb-eyer/go-colorful"
 )
 
 type Options struct {
@@ -35,7 +35,7 @@ func GetIndentcoin(options Options) (*bytes.Buffer, error) {
 
 	svgSize := options.Squares * options.Size
 
-	svgo := svgo.New(buffer)
+	svgo := svg.New(buffer)
 
 	svgo.Start(svgSize, svgSize, "shape-rendering=\"crispEdges\"")
 

@@ -1,4 +1,4 @@
-package main
+package app
 
 import (
 	"encoding/json"
@@ -7,23 +7,13 @@ import (
 	"net/http"
 	"strconv"
 
-	"github.com/steelWinds/identavatar/internal"
+	"github.com/steelWinds/identavatar/pkg"
 )
 
-func main() {
-	http.Handle("/", http.HandlerFunc(HandleGetIdentcoin))
-
-	err := http.ListenAndServe(":3180", nil)
-
-	if err != nil {
-		log.Fatal("Server shutdown:", err)
-	}
-}
-
-func HandleError(w http.ResponseWriter, externalErr error) {
+func HandlerError(w http.ResponseWriter, externalErr error, status int) {
 	w.Header().Set("Content-type", "application/json")
 
-	w.WriteHeader(http.StatusInternalServerError)
+	w.WriteHeader(status)
 
 	response := make(map[string]string)
 
@@ -38,7 +28,7 @@ func HandleError(w http.ResponseWriter, externalErr error) {
 	w.Write(jsonResponse)
 }
 
-func HandleGetIdentcoin(w http.ResponseWriter, req *http.Request) {
+func HandlerGetIdentcoin(w http.ResponseWriter, req *http.Request) {
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.Header().Set("Access-Control-Allow-Methods", "GET, OPTIONS, HEAD")
 	w.Header().Set("Content-Type", "image/svg+xml")
@@ -46,7 +36,7 @@ func HandleGetIdentcoin(w http.ResponseWriter, req *http.Request) {
 	word := req.URL.Query().Get("word")
 
 	if word == "" {
-		HandleError(w, errors.New("word is empty"))
+		HandlerError(w, errors.New("word is empty"), http.StatusBadRequest)
 
 		return
 	}
@@ -54,7 +44,7 @@ func HandleGetIdentcoin(w http.ResponseWriter, req *http.Request) {
 	squares, err := strconv.Atoi(req.URL.Query().Get("squares"))
 
 	if err != nil {
-		HandleError(w, errors.New("squares is not int"))
+		HandlerError(w, errors.New("squares is not int"), http.StatusBadRequest)
 
 		return
 	}
@@ -62,21 +52,21 @@ func HandleGetIdentcoin(w http.ResponseWriter, req *http.Request) {
 	size, err := strconv.Atoi(req.URL.Query().Get("size"))
 
 	if err != nil {
-		HandleError(w, errors.New("size is not int"))
+		HandlerError(w, errors.New("size is not int"), http.StatusBadRequest)
 
 		return
 	}
 
-	options := internal.Options{
+	options := pkg.Options{
 		Squares: squares,
 		Size:    size,
 		Word:    word,
 	}
 
-	buf, err := internal.GetIndentcoin(options)
+	buf, err := pkg.GetIndentcoin(options)
 
 	if err != nil {
-		HandleError(w, errors.New("generate avatar failed"))
+		HandlerError(w, errors.New("generate avatar failed"), http.StatusInternalServerError)
 
 		return
 	}
